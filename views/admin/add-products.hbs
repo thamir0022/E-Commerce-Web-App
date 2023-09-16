@@ -4,42 +4,42 @@
     <form class="row g-3" action="/admin/add-products" method="post" enctype="multipart/form-data">
       <div class="col-md-6">
         <label for="inputEmail4" class="form-label">Product Title</label>
-        <input type="text" name="product-title" class="form-control" id="inputEmail4">
+        <input type="text" name="productTitle" class="form-control" id="inputEmail4">
       </div>
       <div class="col-md-6">
         <label for="inputPassword4" class="form-label">Price</label>
-        <input type="number" name="product-price" class="form-control" id="inputPassword4">
+        <input type="number" name="productPrice" class="form-control" id="inputPassword4">
       </div>
       <div class="col-md-6">
         <label for="inputEmail4" class="form-label">Star</label>
-        <input type="text" name="product-star" value="0" class="form-control" id="inputEmail4">
+        <input type="text" name="productStar" value="0" class="form-control" id="inputEmail4">
       </div>
       <div class="col-md-6">
         <label for="inputPassword4" class="form-label">Star Counts</label>
-        <input type="text" name="product-star-count" value="0" class="form-control" id="inputPassword4">
+        <input type="text" name="productStarCount" value="0" class="form-control" id="inputPassword4">
       </div>
       <div class="col-md-6">
         <label for="inputGroupSelect01" class="form-label">Keywords</label>
         <div class="input-group mb-3">
         <label class="input-group-text" for="inputGroupSelect01">Options</label>
-          <select class="form-select" id="inputGroupSelect01">
+          <select class="form-select" id="inputGroupSelect01" name="category">
             <option selected>None</option>
             <option value="mens">Mens</option>
             <option value="womens">Womens</option>
             <option value="kids">Kids</option>
-            <option value="mens">Utensils</option>
-            <option value="womens">Toys</option>
-            <option value="kids">Electronics</option>
-            <option value="mens">Kitchen</option>
-            <option value="womens">Accesories</option>
-            <option value="kids">Wearables</option>
+            <option value="utensils">Utensils</option>
+            <option value="toys">Toys</option>
+            <option value="electronics">Electronics</option>
+            <option value="kitchen">Kitchen</option>
+            <option value="accesories">Accesories</option>
+            <option value="wearables">Wearables</option>
             <option value=""></option>
         </select>
       </div>
       </div>
       <div class="col-md-6">
         <label for="formFile" class="form-label">Product Image</label>
-        <input class="form-control" type="file" id="formFile" name="product-image">
+        <input class="form-control" type="file" id="formFile" name="productImage">
       </div>
       <div class="col-12">
         <div class="form-check">

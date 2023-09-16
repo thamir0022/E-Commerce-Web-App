@@ -112,7 +112,7 @@
 }
 
 .add-to-cart-button:hover{
-  transition: 250ms;
+  transition: 500ms;
   background-color: #f90;
 }
 
