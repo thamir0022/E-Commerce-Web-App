@@ -4,25 +4,25 @@
     <form class="row g-3" action="/admin/add-products" method="post" enctype="multipart/form-data">
       <div class="col-md-6">
         <label for="inputEmail4" class="form-label">Product Title</label>
-        <input type="text" name="productTitle" class="form-control" id="inputEmail4">
+        <input type="text" name="productTitle" class="form-control" id="inputEmail4" required>
       </div>
       <div class="col-md-6">
         <label for="inputPassword4" class="form-label">Price</label>
-        <input type="number" name="productPrice" class="form-control" id="inputPassword4">
+        <input type="number" name="productPrice" class="form-control" id="inputPassword4" required>
       </div>
       <div class="col-md-6">
         <label for="inputEmail4" class="form-label">Star</label>
-        <input type="text" name="productStar" value="0" class="form-control" id="inputEmail4">
+        <input type="text" name="productStar" value="0" class="form-control" id="inputEmail4" required>
       </div>
       <div class="col-md-6">
         <label for="inputPassword4" class="form-label">Star Counts</label>
-        <input type="text" name="productStarCount" value="0" class="form-control" id="inputPassword4">
+        <input type="text" name="productStarCount" value="0" class="form-control" id="inputPassword4" required>
       </div>
       <div class="col-md-6">
         <label for="inputGroupSelect01" class="form-label">Keywords</label>
         <div class="input-group mb-3">
         <label class="input-group-text" for="inputGroupSelect01">Options</label>
-          <select class="form-select" id="inputGroupSelect01" name="category">
+          <select class="form-select" id="inputGroupSelect01" name="category" required>
             <option selected>None</option>
             <option value="mens">Mens</option>
             <option value="womens">Womens</option>
@@ -39,7 +39,7 @@
       </div>
       <div class="col-md-6">
         <label for="formFile" class="form-label">Product Image</label>
-        <input class="form-control" type="file" id="formFile" name="productImage">
+        <input class="form-control" type="file" id="formFile" name="productImage" accept="image/*">
       </div>
       <div class="col-12">
         <div class="form-check">
