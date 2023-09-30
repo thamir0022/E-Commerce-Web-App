@@ -30,12 +30,17 @@
         <tbody>
           {{#each products}}
           <tr>
-            <td>{{this.name}}</td>
+            <td>{{log this}}{{this.name}}</td>
             <td><img class="admin-img" src="{{this.image}}" alt="Product-Image" title="{{this.name}}" width="80px"></td>
-            <td>{{this.priceCents}}</td>
-            <td>{{this.rating.stars}}</td>
-            <td>{{this.rating.count}}</td>
-            <td>{{keywords}}</td>
+            <td>{{log this}}{{this.priceCents}}</td>
+            <td>{{log this}}{{this.rating.stars}}</td>
+            <td>{{log this}}{{this.rating.count}}</td>
+            <td>
+              {{#each this.keywords}} <!-- Access the keywords array within the current product -->
+              {{this}}
+              {{#unless @last}}, {{/unless}} <!-- Add a comma if it's not the last keyword -->
+              {{/each}}
+            </td>
           </tr>
           {{/each}}
         </tbody>

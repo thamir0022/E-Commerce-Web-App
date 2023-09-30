@@ -1,0 +1,3 @@
+let PRODUCT_COLLECTION = 'product';
+
+export {PRODUCT_COLLECTION};

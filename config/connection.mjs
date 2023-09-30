@@ -2,8 +2,9 @@ import mongoose from 'mongoose';
 
 const db = async () => {
   try {
-    await mongoose.connect('mongodb://127.0.0.1:27017/Shopping');
+    let dbs = await mongoose.connect('mongodb://127.0.0.1:27017/Shopping');
     console.log('Database Connected');
+    return dbs; // Return the Mongoose connection object
   } catch (err) {
     console.error('Failed to connect to the database:', err);
     throw err; // Throw the error again for external handling if needed
@@ -11,28 +12,16 @@ const db = async () => {
 };
 
 const productDetailsSchema = new mongoose.Schema({
-  productTitle: {
-    type: String,
-    required: true,
+  image: String,
+  name: String,
+  rating: {
+    stars: Number,
+    count: Number,
   },
-  productPrice: {
-    type: String,
-    required: true,
-  },
-  productStarCount: {
-    type: String,
-    required: true,
-  },
-  category: {
-    type: String,
-    required: true,
-  },
-  productImage: {
-    type: String,
-    required: true,
-  },
+  priceCents: Number,
+  keywords: [String],
 });
 
-const ProductDetails = mongoose.model('productdetails', productDetailsSchema);
+const ProductDetails = mongoose.model('ProductDetails', productDetailsSchema);
 
 export { db, ProductDetails };

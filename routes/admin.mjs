@@ -1,8 +1,6 @@
 import express from 'express';
 import multer from 'multer';
-import { addProduct } from '../helpers/product-helpers.mjs';
-import products from '../public/javascripts/products.json' assert { type: "json" };
-import { db } from '../config/connection.mjs';
+import { addProduct, getAllProducts } from '../helpers/product-helpers.mjs';
 const router = express.Router();
 
 const storage = multer.diskStorage({
@@ -17,24 +15,37 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 router.get('/', async (req, res, next) => {
-  res.render('admin/view-products', { products, admin: true });
+  try {
+    const products = await getAllProducts();
+    res.render('admin/view-products', { products, admin: true });
+  } catch (error) {
+    next(error); // Forward the error to the error handler
+  }
 });
+
 
 router.get('/add-products', (req, res, next) => {
   res.render('admin/add-products');
 });
 
-router.post('/add-products', upload.single('productImage'), async (req, res) => {
-  const data = {
-    productTitle: req.body.productTitle,
-    productPrice: req.body.productPrice,
-    productStarCount: req.body.productStarCount,
-    category: req.body.category,
-    productImage: req.file.path, // Save the image path in the product data
-  };
+router.post('/add-products', upload.single('productImage'), async (req, res, next) => {
+  try {
+    const data = {
+      image: 'images/products/'+req.file.originalname, // Save the image path in the product data
+      name: req.body.productTitle,
+      rating:{
+        stars: req.body.productStar,
+        count : req.body.productStarCount,
+      },
+      priceCents: req.body.productPrice,
+      keywords: req.body.category,
+    };
 
-  await addProduct(data);
-  res.redirect('/admin');
+    await addProduct(data);
+    res.redirect('/admin');
+  } catch (err) {
+    next(err);
+  }
 });
 
 export default router;

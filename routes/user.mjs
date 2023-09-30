@@ -1,9 +1,9 @@
 import express from 'express';
-import products from '../public/javascripts/products.json' assert { type: "json" };
-
+import { getAllProducts } from '../helpers/product-helpers.mjs';
 const router = express.Router();
 
-router.get('/', (req, res, next) => {
+router.get('/', async(req, res, next) => {
+  const products = await getAllProducts();
   res.render('index', { products, admin: false });
 });
 
