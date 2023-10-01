@@ -10,7 +10,7 @@ import hbs from 'express-handlebars';
 import userRouter from './routes/user.mjs';
 import adminRouter from './routes/admin.mjs';
 import { db } from './config/connection.mjs'
-
+import session from 'express-session';
 const app = express();
 
 db();
@@ -34,6 +34,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({secret:'Key', cookie:{maxAge: 600000}}));
 
 app.use('/', userRouter);
 app.use('/admin', adminRouter);

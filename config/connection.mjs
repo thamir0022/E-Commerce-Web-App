@@ -22,6 +22,14 @@ const productDetailsSchema = new mongoose.Schema({
   keywords: [String],
 });
 
-const ProductDetails = mongoose.model('ProductDetails', productDetailsSchema);
+const userDetailsSchema = new mongoose.Schema({
+  name: String,
+  email: String,
+  userName: String,
+  password: String
+});
 
-export { db, ProductDetails };
+const ProductDetails = mongoose.model('ProductDetails', productDetailsSchema);
+const userDetails = mongoose.model('userDetails', userDetailsSchema);
+
+export { db, ProductDetails, userDetails};

@@ -30,11 +30,11 @@
         <tbody>
           {{#each products}}
           <tr>
-            <td>{{log this}}{{this.name}}</td>
+            <td>{{this.name}}</td>
             <td><img class="admin-img" src="{{this.image}}" alt="Product-Image" title="{{this.name}}" width="80px"></td>
-            <td>{{log this}}{{this.priceCents}}</td>
-            <td>{{log this}}{{this.rating.stars}}</td>
-            <td>{{log this}}{{this.rating.count}}</td>
+            <td>{{this.priceCents}}</td>
+            <td>{{this.rating.stars}}</td>
+            <td>{{this.rating.count}}</td>
             <td>
               {{#each this.keywords}} <!-- Access the keywords array within the current product -->
               {{this}}
