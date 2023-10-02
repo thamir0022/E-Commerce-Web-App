@@ -10,8 +10,13 @@
 				<label for="password">Password</label>
 				<input type="password" name="password" id="password" placeholder="Password">
 				<div class="forgot">
-					<a rel="noopener noreferrer" href="#">Forgot Password ?</a>
+					<a rel="noopener noreferrer" href="#">Forgot Password?</a>
 				</div>
+				{{#if loginErr}}
+				<div class="invalid-user">
+					<p>{{loginErr}}</p>
+				</div>
+			{{/if}}
 			</div>
 			<button class="sign">Sign in</button>
 		</form>

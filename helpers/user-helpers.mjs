@@ -2,11 +2,6 @@ import { userDetails } from '../config/connection.mjs';
 import bcrypt from 'bcrypt';
 
 let doSignup = async (userData) => {
-  // return new Promise((resolve, reject) => {
-  //   userData.Password = bcrypt.hash(userData.password, 10)
-  //   db.get().collection
-  // })
-
   userData.password = await bcrypt.hash(userData.password, 10)
   try{
     await userDetails.create(userData);
@@ -16,7 +11,7 @@ let doSignup = async (userData) => {
 }
 
 const doLogin = async (userData) => {
-  let response = { user: null, loginStatus: false };
+  let response = { user: null, loginStatus: false};
 
   try {
     const user = await userDetails.findOne({ userName: userData.username });

@@ -1,6 +1,6 @@
 import express from 'express';
 import multer from 'multer';
-import { addProduct, getAllProducts } from '../helpers/product-helpers.mjs';
+import { addProduct, getAllProducts, deleteProduct } from '../helpers/product-helpers.mjs';
 const router = express.Router();
 
 const storage = multer.diskStorage({
@@ -48,4 +48,13 @@ router.post('/add-products', upload.single('productImage'), async (req, res, nex
   }
 });
 
+router.get('/delete-product/:id',(req, res, next) => {
+  try{
+    let productId = req.params.id;
+    deleteProduct(productId);
+    res.redirect('/admin')
+  }catch(error){
+    next(error);
+  }
+})
 export default router;

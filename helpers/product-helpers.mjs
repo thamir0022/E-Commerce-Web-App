@@ -24,4 +24,13 @@ const getAllProducts = async () => {
   }
 };
 
-export { addProduct, getAllProducts};
+const deleteProduct = async (productId) => {
+  try{
+  await ProductDetails.deleteOne({_id: productId});
+  console.log('Product deleted successfully');
+  }catch(error){
+    throw(error);
+  }
+}
+
+export { addProduct, getAllProducts, deleteProduct};

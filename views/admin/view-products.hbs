@@ -16,7 +16,7 @@
   <section>
     <div class="container">
       <a href="admin/add-products"><button class="btn btn-dark my-3">Add Products</button></a>
-      <table class="table table table-hover">
+      <table class="table table-hover">
         <thead>
           <tr>
             <th scope="col">Title</th>
@@ -25,12 +25,14 @@
             <th scope="col">Rating</th>
             <th scope="col">Rating Count</th>
             <th scope="col">Keywords</th>
+            <th scope="col">Edit</th>
+            <th scope="col">Delete</th>
           </tr>
         </thead>
         <tbody>
           {{#each products}}
           <tr>
-            <td>{{this.name}}</td>
+            <td style="width: 300px;">{{this.name}}</td>
             <td><img class="admin-img" src="{{this.image}}" alt="Product-Image" title="{{this.name}}" width="80px"></td>
             <td>{{this.priceCents}}</td>
             <td>{{this.rating.stars}}</td>
@@ -41,6 +43,8 @@
               {{#unless @last}}, {{/unless}} <!-- Add a comma if it's not the last keyword -->
               {{/each}}
             </td>
+            <td><a href="/admin/edit-product/{{this._id}}" class="btn btn-warning" style="margin-top: 20px;">Edit</a></td>
+            <td><a href="/admin/delete-product/{{this._id}}" class="btn btn-danger" style="margin-top: 20px;" onclick="return confirm('Are you want to delete {{this.name}} ?')">Delete</a></td>
           </tr>
           {{/each}}
         </tbody>

@@ -1,18 +1,29 @@
-import express from 'express';
+import express, { Router } from 'express';
 import { getAllProducts } from '../helpers/product-helpers.mjs';
 import { doSignup, doLogin } from '../helpers/user-helpers.mjs';
-import { userDetails } from '../config/connection.mjs'
 const router = express.Router();
+
+const verifyLogin = (req, res, next) => {
+  if(req.session.loggedIn){
+    next();
+  }else{
+    res.redirect('/login');
+  }
+}
 
 router.get('/', async(req, res, next) => {
   let userDetails = req.session.user;
-  console.log(userDetails);
   const products = await getAllProducts();
-  res.render('users/index', { products, userDetails, isuser: true });
+  res.render('users/index', { products, userDetails, isuser: true});
 });
 
 router.get('/login', (req, res, next) => {
-  res.render('users/login', { auth: true });
+  if(req.session.loggedIn){
+    res.redirect('/');
+  }else{
+    res.render('users/login', { auth: true, loginErr: req.session.loginErr});
+    req.session.loginErr = null;
+  }
 });
 
 router.get('/signup', (req, res, next) => {
@@ -22,6 +33,10 @@ router.get('/signup', (req, res, next) => {
 router.get('/logout', (req, res, next) => {
   req.session.destroy();
   res.redirect('/');
+});
+
+router.get('/cart',verifyLogin,(req, res, next) => {
+  res.render('users/cart');
 });
 
 router.post('/signup',async (req, res, next) => {
@@ -50,6 +65,7 @@ router.post('/login', async (req, res, next) => {
       req.session.user = user;
       res.redirect('/');
     } else {
+      req.session.loginErr = 'Invalid Username or password!'
       res.redirect('/login');
     }
   } catch (error) {
@@ -57,5 +73,8 @@ router.post('/login', async (req, res, next) => {
     res.status(500).send('Internal Server Error');
   }
 });
+
+//This function is used to check a user is logged in or not, we can call this function where ever we wanna know if a user is logged in or not.
+
 
 export default router;

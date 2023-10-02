@@ -9,6 +9,13 @@ body{
   margin-top: 7%;
 }
 
+.invalid-user{
+  color: red;
+  text-decoration: none;
+  margin-bottom: 5px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
 .login{
   display: flex;
   align-items: center;
