@@ -1,0 +1,48 @@
+<section>
+  {{#product}}
+  <div class="container">
+    <h2 class="d-flex justify-content-center mb-3">Edit Product</h2>
+    <form class="row g-3" action="/admin/edit-product/{{this._id}}" method="post" enctype="multipart/form-data">
+      <div class="col-md-6">
+        <label for="inputEmail4" class="form-label">Product Title</label>
+        <input type="text" name="productTitle" class="form-control border border-black" id="inputEmail4" value="{{this.name}}" required>
+      </div>
+      <div class="col-md-6">
+        <label for="inputPassword4" class="form-label">Price</label>
+        <input type="number" name="productPrice" class="form-control border border-black" id="inputPassword4" value="{{this.priceCents}}" required>
+      </div>
+      <div class="col-md-6">
+        <label for="inputEmail4" class="form-label">Star</label>
+        <input type="text" name="productStar" value="{{this.rating.stars}}" class="form-control border border-black" id="inputEmail4"  required>
+      </div>
+      <div class="col-md-6">
+        <label for="inputPassword4" class="form-label">Star Counts</label>
+        <input type="text" name="productStarCount" value="{{this.rating.count}}" class="form-control border border-black" id="inputPassword4" required>
+      </div>
+      <div class="col-md-6">
+        <label for="inputGroupSelect01" class="form-label">Keywords</label>
+          <textarea style="max-height: 100px;" maxlength="50" name="keywords" class="form-control border border-black" required>{{#each this.keywords}}{{this}}{{#unless @last}}, {{/unless}}{{/each}}</textarea>
+      </div>
+      <div class="col-md-3">
+        <label for="formFile" class="form-label">Current Product Image</label>
+        <img style="margin-left: 25px;" class="border border-black" src="/{{this.image}}" width="80px">
+      </div>
+      <div class="col-md-3">
+        <label for="formFile" class="form-label">New Product Image</label>
+        <input class="form-control border border-black" type="file" id="formFile" name="productImage" accept="image/*">
+      </div>
+      <div class="col-12">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="gridCheck" required>
+          <label class="form-check-label" for="gridCheck">
+            Check me out
+          </label>
+        </div>
+      </div>
+      <div class="col-6">
+        <button type="submit" class="btn btn-outline-dark mb-3 float-start">Conform</button>
+      </div>
+      {{/product}}
+    </form>
+  </div>
+</section>

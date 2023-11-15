@@ -1,4 +1,5 @@
 import { ProductDetails } from '../config/connection.mjs';
+import { ObjectId } from 'mongodb';
 
 async function addProduct(data) {
   try {
@@ -22,7 +23,18 @@ const getAllProducts = async () => {
   } catch (error) {
     throw(error);
   }
-};
+}
+
+const findProduct = async (productId) => {
+  try {
+    const product = await ProductDetails.findById(productId);
+    const productWithIdToString = { ...product.toObject(), _id: product._id.toString() };
+      return productWithIdToString;
+  } catch (error) {
+    throw error;
+  }
+}
+
 
 const deleteProduct = async (productId) => {
   try{
@@ -33,4 +45,20 @@ const deleteProduct = async (productId) => {
   }
 }
 
-export { addProduct, getAllProducts, deleteProduct};
+const editProduct = async (productId, data) => {
+  try {
+    const updatedProduct = await ProductDetails.findByIdAndUpdate(productId, data, { new: true });
+
+    if (!updatedProduct) {
+      throw new Error(`Product with ID ${productId} not found`);
+    }
+
+    return updatedProduct;
+  } catch (error) {
+    // You might want to customize the error message or log more information here
+    throw new Error(`Error updating product: ${error.message}`);
+  }
+};
+
+
+export { addProduct, getAllProducts, deleteProduct, findProduct, editProduct};

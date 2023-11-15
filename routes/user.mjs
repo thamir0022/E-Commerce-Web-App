@@ -3,6 +3,7 @@ import { getAllProducts } from '../helpers/product-helpers.mjs';
 import { doSignup, doLogin } from '../helpers/user-helpers.mjs';
 const router = express.Router();
 
+//This function is used to check a user is logged in or not, we can call this function where ever we wanna know if a user is logged in or not.
 const verifyLogin = (req, res, next) => {
   if(req.session.loggedIn){
     next();
@@ -73,8 +74,5 @@ router.post('/login', async (req, res, next) => {
     res.status(500).send('Internal Server Error');
   }
 });
-
-//This function is used to check a user is logged in or not, we can call this function where ever we wanna know if a user is logged in or not.
-
 
 export default router;
