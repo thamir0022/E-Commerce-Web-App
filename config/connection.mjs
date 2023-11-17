@@ -32,11 +32,8 @@ const userDetailsSchema = new mongoose.Schema({
 const cartDetailsSchema = new mongoose.Schema({
   userId: String,
   products: [{
-    _id: String,
-    name: String,
-    image: String,
-    price: String,
-    nos: Number
+    productId: String,
+    quantity: Number
   }]
 });
 

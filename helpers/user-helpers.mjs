@@ -49,17 +49,14 @@ const addToCart = async (userId, productId) => {
 
     if (cart) {
       // Product is already in the cart, increment the quantity
-      const existingProduct = cart.products.find(p => p._id === productId);
+      const existingProduct = cart.products.find(p => p.productId === productId);
       if (existingProduct) {
-        existingProduct.nos += 1;
+        existingProduct.quantity += 1;
       } else {
         // Product is not in the cart, add it
         cart.products.push({
-          _id: product._id,
-          name: product.name,
-          image: product.image,
-          price: product.priceCents,
-          nos: 1
+          productId: product._id,
+          quantity: 1
         },);
       }
 
@@ -67,14 +64,11 @@ const addToCart = async (userId, productId) => {
       console.log('Product quantity updated in the cart');
     } else {
       // Cart doesn't exist, create a new cart
-      const newCart = await cartDetails.create({
+      await cartDetails.create({
         userId: userId,
         products: [{
-          _id: product._id,
-          name: product.name,
-          image: product.image,
-          price: product.priceCents,
-          nos: 1
+          productId: product._id,
+          quantity: 1
         }]
       });
 
@@ -86,21 +80,52 @@ const addToCart = async (userId, productId) => {
   }
 };
 
+const updateCart = async (userId, productId, change) => {
+  try{
+    const cart = await cartDetails.findOne({ userId: userId}) 
+    if(cart){
+      let product = cart.products.find(product => product.productId === productId)
+      if(change == 1){
+        product.quantity += 1;
+        await cart.save()
+      }else if(change == -1){
+        product.quantity -= 1;
+        await cart.save()
+      }
+    }
+  }catch(error){
+    throw(error)
+  }
+}
 
 const cartProducts = async (userId) => {
   try {
     let cartData = await cartDetails.findOne({ userId: userId });
 
     if (!cartData || !cartData.products) {
-      return []; // Return an empty array or handle the empty cart case
+      return -1; // Return -1 for empty cart
     }
 
-    return cartData.products;
+    const productIds = cartData.products.map(p => p.productId)
+    const productQuantity = cartData.products.map(p => p.quantity)
+    
+    const productDetailsPromises = productIds.map(async productId => await findProduct(productId));
+
+    try {
+      const productDetails = await Promise.all(productDetailsPromises);
+      const productsWithQuantity = productDetails.map((product, index) => ({
+        ...product,
+        quantity: productQuantity[index]
+      }));
+
+      return productsWithQuantity;
+    } catch (error) {
+      console.error(error);
+    }
   } catch (error) {
     console.error('Error while fetching cart products:', error);
     throw new Error('Error while fetching cart products');
   }
 };
 
-
-export { doSignup, doLogin, addToCart, cartProducts}
+export { doSignup, doLogin, addToCart, cartProducts, updateCart}

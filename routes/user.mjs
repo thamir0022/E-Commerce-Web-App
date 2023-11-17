@@ -1,6 +1,6 @@
 import express from 'express';
 import { getAllProducts } from '../helpers/product-helpers.mjs';
-import { doSignup, doLogin, addToCart, cartProducts} from '../helpers/user-helpers.mjs';
+import { doSignup, doLogin, addToCart, cartProducts, updateCart} from '../helpers/user-helpers.mjs';
 const router = express.Router();
 
 //This function is used to check a user is logged in or not, we can call this function where ever we wanna know if a user is logged in or not.
@@ -40,8 +40,12 @@ router.get('/cart',verifyLogin, async(req, res, next) => {
   try{
     const userDetails = req.session.user;
     let userId = req.session.user?.user?._id;
+    let isCartEmpty = false; 
     let products = await cartProducts(userId);
-    res.render('users/cart', { cart: true, isuser: true, userDetails, products});
+    if(products == -1){
+      isCartEmpty = true
+    }
+    res.render('users/cart', { cart: true, isuser: true, isCartEmpty,userDetails, products});
   }catch(error){
     next(error)
   }
@@ -98,5 +102,13 @@ router.get('/add-to-cart/:id', verifyLogin, async (req, res, next) => {
     next('Error while adding to cart', error);
   }
 });
+
+router.get('/update-cart/:id/:ch', async (req, res, next) => {
+  let userId = req.session.user?.user?._id
+  let productId = req.params.id
+  let ch = req.params.ch
+  await updateCart(userId, productId, ch)
+  res.redirect('/cart')
+})
 
 export default router;

@@ -56,6 +56,7 @@
 
 .arrow {
   cursor: pointer;
+  color: black;
 }
 
 #total-count {
@@ -67,3 +68,11 @@
 .action-button button {
   width: 100%; /* Make action buttons fill the available width */
 }
+
+.cart-empty{
+  margin: auto;
+  padding: 10%;
+  width: fit-content;
+  text-align: center;
+}
+
