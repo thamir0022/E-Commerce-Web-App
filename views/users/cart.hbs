@@ -1,1 +1,44 @@
-<h1>This is cart page</h1>
+<section>
+  <div class="container">
+    <div class="cart-items">
+      {{#each products}}
+      <div class="cart-item row align-items-center mb-3">
+        <div class="product col-lg-3 col-sm-6 col-12">
+          <div class="product-image-container">
+            <img class="product-image img-fluid" src="{{this.image}}" alt="{{this.name}}">
+          </div>
+        </div>
+        <div class="product-details-container col-lg-3 col-sm-6 col-12">
+          <p class="product-details">{{this.name}}</p>
+        </div>
+        <div class="product-price-container col-lg-2 col-sm-6 col-12">
+          <p class="product-price">{{this.price}}</p>
+        </div>
+        <div class="quantity-button-container col-lg-2 col-sm-6 col-12">
+          <div class="button quantity-button">
+            <svg id="" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
+              class="bi bi-caret-up-fill arrow" viewBox="0 0 16 16">
+              <path
+                d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z" />
+            </svg>
+            <div id="total-count">{{this.nos}}</div>
+            <svg id="" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
+              class="bi bi-caret-down-fill arrow" viewBox="0 0 16 16">
+              <path
+                d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
+            </svg>
+          </div>
+        </div>
+        <div class="action-buttons-container col-lg-2 col-sm-12 col-12">
+          <div class="button action-button">
+            <button class="btn btn-warning">Remove</button>
+          </div>
+          <div class="button action-button">
+            <button class="btn btn-success">Buy</button>
+          </div>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+</section>

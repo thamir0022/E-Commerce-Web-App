@@ -23,13 +23,17 @@
         <label for="inputGroupSelect01" class="form-label">Keywords</label>
           <textarea style="max-height: 100px;" maxlength="50" name="keywords" class="form-control border border-black" required>{{#each this.keywords}}{{this}}{{#unless @last}}, {{/unless}}{{/each}}</textarea>
       </div>
-      <div class="col-md-3">
+      <div class="col-md-6">
+        <label for="formFile" class="form-label">New Product Image</label>
+        <input class="form-control border border-black" type="file" id="formFile" name="productImage" onchange="viewImg(event)" accept="image/*">
+      </div>
+      <div class="col-md-6">
         <label for="formFile" class="form-label">Current Product Image</label>
         <img style="margin-left: 25px;" class="border border-black" src="/{{this.image}}" width="80px">
       </div>
-      <div class="col-md-3">
+      <div class="col-md-6" id="newProductImageContainer" style="display: none;>
         <label for="formFile" class="form-label">New Product Image</label>
-        <input class="form-control border border-black" type="file" id="formFile" name="productImage" accept="image/*">
+        <img id="NewProductImg" style="margin-left: 25px;" class="border border-black"  width="80px">
       </div>
       <div class="col-12">
         <div class="form-check">
@@ -46,3 +50,11 @@
     </form>
   </div>
 </section>
+
+<script>
+    function viewImg(event) {
+    document.getElementById('NewProductImg').setAttribute('src', URL.createObjectURL(event.target.files[0]));
+    const newProductImageContainer = document.getElementById('newProductImageContainer');
+    newProductImageContainer.style.display = 'block';
+  }
+</script>

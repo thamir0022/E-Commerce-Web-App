@@ -1,4 +1,7 @@
 <section>
+  {{#if userDetails}}
+        <h3 style="margin-left: 7%;" class="">Welcome back {{userDetails.user.name}} 👋🏻</h3>
+  {{/if}}
   <div class="album py-5 bg-body-emphasis">
     <div class="container">
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-cols-xxl-6 g-3">
@@ -47,7 +50,7 @@
             </div>
 
             <button class="add-to-cart-button button-primary js-add-to-cart" data-product-id="${product.id}">
-              Add to Cart
+              <a style="text-decoration: none; color: black; font-weight: 500;" href="/add-to-cart/{{this._id}}/" onclick="addToCartBtn(this)">Add to Cart</a>
             </button>
           </div>
         </div>
@@ -56,3 +59,16 @@
     </div>
   </div>
 </section>
+
+<script>
+  function addToCartBtn(button) {
+    // Disable the button to prevent multiple clicks
+    button.disabled = true;
+    // Change the button text to 'Item added'
+    button.textContent =  'Item added';
+    //Change the button text to 'Add to cart' after 2 seconds
+    setTimeout(() => {
+      button.textContent =  'Add to cart';
+    },2000);
+  }
+</script>

@@ -1,7 +1,6 @@
 import express from 'express';
 import multer from 'multer';
 import { addProduct, getAllProducts, deleteProduct, findProduct, editProduct} from '../helpers/product-helpers.mjs';
-import { ProductDetails } from '../config/connection.mjs';
 
 const router = express.Router();
 
@@ -96,7 +95,5 @@ router.post('/edit-product/:id', upload.single('productImage'), async (req, res,
     next('Error in product updation',error);
   }
 });
-
-
 
 export default router;

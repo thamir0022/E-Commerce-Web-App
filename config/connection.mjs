@@ -29,7 +29,19 @@ const userDetailsSchema = new mongoose.Schema({
   password: String
 });
 
+const cartDetailsSchema = new mongoose.Schema({
+  userId: String,
+  products: [{
+    _id: String,
+    name: String,
+    image: String,
+    price: String,
+    nos: Number
+  }]
+});
+
 const ProductDetails = mongoose.model('ProductDetails', productDetailsSchema);
 const userDetails = mongoose.model('userDetails', userDetailsSchema);
+const cartDetails = mongoose.model('cartDetails', cartDetailsSchema);
 
-export { db, ProductDetails, userDetails};
+export { db, ProductDetails, userDetails, cartDetails};

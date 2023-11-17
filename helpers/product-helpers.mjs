@@ -1,5 +1,4 @@
-import { ProductDetails } from '../config/connection.mjs';
-import { ObjectId } from 'mongodb';
+import { ProductDetails, cartDetails } from '../config/connection.mjs';
 
 async function addProduct(data) {
   try {

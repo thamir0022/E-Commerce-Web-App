@@ -1,52 +1,66 @@
 <header class="p-3 mb-3 border-bottom">
-    <div class="container">
-      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-        <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 link-body-emphasis text-decoration-none">
-          <svg class="bi me-2" width="40" height="32" role="img" aria-label="Amazon">
-            <use xlink:href="/"></use>
-          </svg>
+  <div class="container">
+    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+      <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 link-body-emphasis text-decoration-none">
+        <svg class="bi me-2" width="40" height="32" role="img" aria-label="Amazon">
+          <use xlink:href="/"></use>
+        </svg>
+      </a>
+
+      <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+        <li><a href="#" class="nav-link px-2 link-body-emphasis">Home</a></li>
+        <li><a href="#" class="nav-link px-2 link-body-emphasis">Products</a></li>
+        {{#if userDetails.loginStatus}}
+        <li><a href="#" class="nav-link px-2 link-body-emphasis">My Orders</a></li>
+        <li><a href="#" class="nav-link px-2 link-body-emphasis">Dashboard</a></li>
+        <li><a href="/admin" class="nav-link px-2 link-body-emphasis">Admin Page</a></li>
+        {{/if}}
+      </ul>
+
+      <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
+        <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
+      </form>
+
+      <a style="color: black;" href="/cart"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-cart3"
+          viewBox="0 0 16 16">
+          <path
+            d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+        </svg></a>
+      <div class="dropdown text-end">
+        <a href="" class="d-block link-body-emphasis text-decoration-none dropdown-toggle mx-3" data-bs-toggle="dropdown"
+          aria-expanded="false">
+          <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
         </a>
-
-        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-          <li><a href="#" class="nav-link px-2 link-body-emphasis">Home</a></li>
-          <li><a href="#" class="nav-link px-2 link-body-emphasis">Products</a></li>
-          {{#if userDetails.loginStatus}}
-          <li><a href="#" class="nav-link px-2 link-body-emphasis">My Orders</a></li>
-          <li><a href="#" class="nav-link px-2 link-body-emphasis">Dashboard</a></li>
-          {{/if}}
+        {{#if userDetails.loginStatus}}
+        <ul class="dropdown-menu text-small" style="">
+          <li><a class="dropdown-item" href="/">Profile</a></li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+          <li><a class="dropdown-item" href="/cart">Cart</a></li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+          <li><a class="dropdown-item" href="/">Orders</a></li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+          <li><a class="dropdown-item" href="/">Settings</a></li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+          <li><a class="dropdown-item" href="/logout">Sign Out</a></li>
         </ul>
-        
-        <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
-          <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
-        </form>
-
-        
-        <div class="dropdown text-end">
-          
-          <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown"
-            aria-expanded="false">
-            <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
-          </a>
-          {{#if userDetails.loginStatus}}
-          <ul class="dropdown-menu text-small" style="">
-            <li><a class="dropdown-item" href="/">Profile</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="/cart">Cart</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="/">Orders</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="/">Settings</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="/logout">Sign Out</a></li>
-          </ul>
-          {{else}}
-          <ul class="dropdown-menu text-small" style="">
-            <li><a class="dropdown-item" href="/login">Log In</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="/">Settings</a></li>
-          </ul>
-          {{/if}}
-        </div>
+        {{else}}
+        <ul class="dropdown-menu text-small" style="">
+          <li><a class="dropdown-item" href="/login">Log In</a></li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+          <li><a class="dropdown-item" href="/">Settings</a></li>
+        </ul>
+        {{/if}}
       </div>
     </div>
-  </header>
+  </div>
+</header>
