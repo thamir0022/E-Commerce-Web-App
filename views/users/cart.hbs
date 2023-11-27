@@ -42,14 +42,22 @@
         </div>
         <div class="action-buttons-container col-lg-2 col-sm-12 col-12">
           <div class="button action-button">
-            <button class="btn btn-warning">Remove</button>
+              <a href="/remove-product/{{this._id}}"><button class="btn btn-warning fw-bold remove-button">Remove</button></a>
           </div>
           <div class="button action-button">
-            <button class="btn btn-success">Buy</button>
+              <a href=""><button class="btn btn-success buy-button fw-bold">Buy</button></a>
           </div>
         </div>
       </div>
       {{/each}}
+      <div class="col-md-12 row g-2 my-5">
+        <div class="col-md-6">
+          <h3 class="">Total Amount : ₹ {{totalAmount}}</h3>
+        </div>
+        <div class="col-md-6 d-flex justify-content-end">
+          <a style="color: white;" href="/check-out"><button class="btn btn-dark">Check Out</button></a>
+        </div>
+      </div>
     </div>
     {{/if}}
   </div>

@@ -19,27 +19,19 @@
         <input type="text" name="productStarCount" value="0" class="form-control" id="inputPassword4" required>
       </div>
       <div class="col-md-6">
-        <label for="inputGroupSelect01" class="form-label">Keywords</label>
-        <div class="input-group mb-3">
-        <label class="input-group-text" for="inputGroupSelect01">Options</label>
-          <select class="form-select" id="inputGroupSelect01" name="category" required>
-            <option selected>None</option>
-            <option value="mens">Mens</option>
-            <option value="womens">Womens</option>
-            <option value="kids">Kids</option>
-            <option value="utensils">Utensils</option>
-            <option value="toys">Toys</option>
-            <option value="electronics">Electronics</option>
-            <option value="kitchen">Kitchen</option>
-            <option value="accesories">Accesories</option>
-            <option value="wearables">Wearables</option>
-            <option value=""></option>
-        </select>
-      </div>
+        <label class="form-label">Keywords</label>
+        <div class="mb-3 col-md-6">
+          <textarea style="max-height: 40px; min-height: 40px; border: 2px solid #ccc; border-radius: 5px;" name="" id="" cols="30" rows="1"></textarea>
+        </div>
+        <label class="form-label">Product Image</label>
+        <div class="mb-3 col-md-6">
+          <img id="NewProductImg" style="margin-left: 25px;" width="80px">
+        </div>
       </div>
       <div class="col-md-6">
         <label for="formFile" class="form-label">Product Image</label>
-        <input class="form-control" type="file" id="formFile" name="productImage" accept="image/*">
+        <input class="form-control" type="file" id="formFile" name="productImage" onchange="viewImg(event)"
+          accept="image/*">
       </div>
       <div class="col-12">
         <div class="form-check">
@@ -55,3 +47,11 @@
     </form>
   </div>
 </section>
+
+<script>
+  function viewImg(event) {
+    document.getElementById('NewProductImg').setAttribute('src', URL.createObjectURL(event.target.files[0]));
+    const newProductImageContainer = document.getElementById('newProductImageContainer');
+    newProductImageContainer.style.display = 'block';
+  }
+</script>

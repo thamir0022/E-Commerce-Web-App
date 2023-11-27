@@ -33,12 +33,34 @@ const cartDetailsSchema = new mongoose.Schema({
   userId: String,
   products: [{
     productId: String,
-    quantity: Number
+    quantity: Number,
   }]
 });
+
+const orderDetailsSchema = new mongoose.Schema({
+  userId: String,
+  orders: [{
+  firstName: String,
+  lastName: String,
+  address: String,
+  state: String,
+  zipCode: String,
+  phoneNumber: String,
+  paymentMethod: String,
+  date: String,
+  productDetails: [{
+    productId: String,
+    quantity: Number
+  }],
+  totalAmount: Number,
+  totalProducts: Number,
+  status: String
+  }]
+})
 
 const ProductDetails = mongoose.model('ProductDetails', productDetailsSchema);
 const userDetails = mongoose.model('userDetails', userDetailsSchema);
 const cartDetails = mongoose.model('cartDetails', cartDetailsSchema);
+const orderDetails = mongoose.model('orderDetails', orderDetailsSchema);
 
-export { db, ProductDetails, userDetails, cartDetails};
+export { db, ProductDetails, userDetails, cartDetails, orderDetails};

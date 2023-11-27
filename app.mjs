@@ -24,6 +24,11 @@ const hbs = exphbs.create({
   runtimeOptions: {
     allowProtoPropertiesByDefault: true,
   },
+  //Adding required Helpers
+  helpers: {
+    json: (context) => JSON.stringify(context),
+    multiply: (a, b) => a * b
+  },
 });
 
 // View engine setup

@@ -1,0 +1,71 @@
+<section class="container">
+  {{#if orderDetails}}
+    <h2 class="d-flex justify-content-center">My Orders</h2>
+    {{#each orderDetails.orders}}
+      <div class="my-order-container my-5">
+        <div class="col-md-12 d-flex align-items-center border-bottom justify-content-between">
+          <div style="cursor: pointer;" class="col-md-3 rounded-pill m-3 p-3 order-id" onclick="copyToClipboard()">
+            <p class="my-auto">Order Id <span id="copy-id" class="ms-2 fw-bold font-monospace">{{_id}}</span></p>
+          </div>
+            <div>Order placed on <span>{{date}}</span></div>
+            <button class="btn btn-outline-dark justify-content-end mx-3">Track Order</button>
+        </div>
+
+        {{#if products}}
+          {{#each products}}
+            <div class="col-md-12 d-flex p-5 align-items-center justify-content-between order-product">
+              <div class="col-md-3">
+                <img class="product-image" src="{{image}}" alt="{{name}}" width="50%">
+              </div>
+              <div class="col-md-3 text-center product-details">
+                <p>{{name}}</p>
+                <div class="d-flex justify-content-between">
+                  <div class="col-md-6">
+                    Quantity {{quantity}}
+                  </div>
+                  <div class="col-md-6">
+                    Price ₹ {{multiply quantity priceCents}}
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3 text-center">
+                <p>Delivery Expected by</p>
+                <p class="fw-bold">25 Dec 2023</p>
+              </div>
+              <div class="col-md-3 text-center">
+                <p>Status <span class="mx-2 text-warning">Departed</span></p>
+              </div>
+            </div>
+            {{#unless @last}}<hr style="margin: auto; width: 80%;">{{/unless}}
+          {{/each}}
+        {{/if}}
+
+        <hr style="margin: 0;">
+        <div class="d-flex justify-content-between text-center">
+          <button class="button">Cancel Order</button>
+          <p class="my-auto">Cash On Delivery</p>
+          <p class="my-auto">Total Amount <span class="me-3 fw-bold">₹ {{totalAmount}}</span></p>
+        </div>
+      </div>
+    {{/each}}
+  {{else}}
+    <p>No order details available.</p>
+  {{/if}}
+</section>
+
+<script>
+  function copyToClipboard() {
+    // Select the text element
+    const textElement = document.getElementById('copy-id');
+    const textToCopy = textElement.innerText;
+
+    // Use the modern Clipboard API
+    navigator.clipboard.writeText(textToCopy)
+        .then(() => {
+            alert('Order ID copied to clipboard!');
+        })
+        .catch(err => {
+            console.error('Unable to copy text to clipboard', err);
+        });
+  }
+</script>

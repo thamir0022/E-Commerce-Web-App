@@ -57,6 +57,7 @@
 .arrow {
   cursor: pointer;
   color: black;
+  text-decoration: none;
 }
 
 #total-count {
@@ -76,3 +77,12 @@
   text-align: center;
 }
 
+a{
+  text-decoration: none;
+  font-weight: bold;
+  color: black;
+}
+
+.remove-button, .buy-button {
+  width: 150px !important;
+}

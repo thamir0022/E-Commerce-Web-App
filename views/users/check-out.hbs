@@ -1,0 +1,147 @@
+<section>
+  <div class="container">
+    <main>
+      <div class="py-5 text-center">
+        <a href="/"><img class="d-block mx-auto mb-4" src="/images/amazon-logo.svg" alt="" height="100"></a>
+        <h2>Checkout Form</h2>
+      </div>
+
+      <div class="row g-5">
+        <div class="col-md-5 col-lg-5 order-md-last">
+          <h4 class="d-flex justify-content-between align-items-center mb-3">
+            <span class="text-dark">Your cart</span>
+            <span class="badge bg-secondary rounded-pill">{{totalProducts}}</span>
+          </h4>
+          <ul class="list-group mb-3">
+
+            {{#each products}}
+            <li class="list-group-item d-flex justify-content-between lh-sm">
+              <div>
+                <h6 class="my-0">{{this.name}}</h6>
+                <small class="text-body-secondary">Quantity <strong>{{this.quantity}}</strong></small>
+              </div>
+              <span class="text-body-secondary">₹ {{multiply this.quantity this.priceCents}}</span>
+              <img src="{{this.image}}" alt="" width="60px">
+            </li>
+            {{/each}}
+
+            <li class="list-group-item d-flex justify-content-between">
+              <span>Total (INR)</span>
+              <strong>₹ {{totalAmount}}</strong>
+            </li>
+          </ul>
+        </div>
+
+        <div class="col-md-7 col-lg-7">
+          <h4 class="mb-3">Shipping address</h4>
+          <form class="form" id="check-out-form" action="/place-order" method="post">
+            <div class="row g-3">
+              <div class="col-sm-6">
+                <input hidden type="text" name="userId" value="{{userId}}" id="">
+                <label for="firstName" class="form-label">First name</label>
+                <input type="text" name="firstName" class="form-control" id="firstName" placeholder="" value="Thamir"
+                  required fdprocessedid="uiy03">
+              </div>
+
+              <div class="col-sm-6">
+                <label for="lastName" class="form-label">Last name</label>
+                <input type="text" name="lastName" class="form-control" id="lastName" placeholder="" value="Siddik"
+                  required fdprocessedid="ox0ge">
+              </div>
+
+              <div class="col-12">
+                <label for="address" class="form-label">Address</label>
+                <input type="text" name="address" class="form-control" id="address" placeholder="1234 Main St"
+                  value="Palakkad" required fdprocessedid="9qbaq">
+              </div>
+
+              <div class="col-md-4">
+                <label for="state" class="form-label">State</label>
+                <select class="form-select" name="state" id="state" required fdprocessedid="15u6rl">
+                  <option value="" selected="Kerela">Choose...</option>
+                  <option>Kerela</option>
+                </select>
+              </div>
+
+              <div class="col-md-4">
+                <label for="zip" class="form-label">Zip</label>
+                <input type="text" name="zipCode" class="form-control" id="zip" placeholder="" value="678002" required
+                  fdprocessedid="6ue81m">
+              </div>
+
+              <div class="col-md-4">
+                <label for="zip" class="form-label">Phone Number</label>
+                <input type="text" name="phoneNumber" class="form-control" id="phoneNumber" placeholder=""
+                  value="1234567890" required fdprocessedid="6ue81m">
+              </div>
+            </div>
+
+            <hr class="my-4">
+
+            <div class="form-check">
+              <input type="checkbox" name="saveInformation" class="form-check-input" id="save-info">
+              <label class="form-check-label" for="save-info">Save this information for next time</label>
+            </div>
+
+            <hr class="my-4">
+
+            <h4 class="mb-3">Payment</h4>
+
+            <div class="my-3">
+              <div class="form-check">
+                <input id="credit" name="paymentMethod" type="radio" value="cod" class="form-check-input" checked=""
+                  required="">
+                <label class="form-check-label" for="credit">Cash On Delivery</label>
+              </div>
+              <div class="form-check">
+                <input id="debit" name="paymentMethod" type="radio" value="debit-card" class="form-check-input"
+                  required="">
+                <label class="form-check-label" for="debit">Debit card</label>
+              </div>
+              <div class="form-check">
+                <input id="paypal" name="paymentMethod" type="radio" value="paypal" class="form-check-input"
+                  required="">
+                <label class="form-check-label" for="paypal">PayPal</label>
+              </div>
+            </div>
+
+            <hr class="my-4">
+            <button class="w-100 btn btn-outline-dark btn-lg" type="submit">Place Order</button>
+          </form>
+        </div>
+      </div>
+    </main>
+
+    <footer class="my-5 pt-5 text-body-secondary text-center text-small">
+      <p class="mb-1">© 2017–2023 Company Name</p>
+      <ul class="list-inline">
+        <li class="list-inline-item"><a href="#">Privacy</a></li>
+        <li class="list-inline-item"><a href="#">Terms</a></li>
+        <li class="list-inline-item"><a href="#">Support</a></li>
+      </ul>
+    </footer>
+  </div>
+</section>
+
+{{!-- <script>
+
+  $("#check-out-form").submit(() => {
+    const formData = $('#check-out-form').serialize();
+    console.log('Data : ', formData);
+
+    $.ajax({
+      url: '/place-order',
+      method: 'post',
+      data: formData,
+      success: (response) => {
+        // Redirect to /order-details upon successful order placement
+        window.location.href = '/order-details';
+      },
+      error: (error) => {
+        // Handle error response if needed
+        console.error(error);
+      }
+    });
+  });
+
+</script> --}}

@@ -27,12 +27,18 @@ const getAllProducts = async () => {
 const findProduct = async (productId) => {
   try {
     const product = await ProductDetails.findById(productId);
-    const productWithIdToString = { ...product.toObject(), _id: product._id.toString() };
-      return productWithIdToString;
+
+    if (product) {
+      // Check if product is not null before attempting to convert
+      return { ...product.toObject(), _id: product._id.toString() };
+    } else {
+      return null; 
+    }
   } catch (error) {
     throw error;
   }
-}
+};
+
 
 
 const deleteProduct = async (productId) => {

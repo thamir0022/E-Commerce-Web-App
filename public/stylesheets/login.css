@@ -1,5 +1,5 @@
 body{
-  background-color: rgb(20, 28, 43) !important;
+  background-color: aliceblue;
 }
 
 .signup{
@@ -27,14 +27,14 @@ body{
   /* margin: 15vh auto; */
   width: 320px;
   border-radius: 0.75rem;
-  background-color: rgba(17, 24, 39, 1);
+  background-color: ghostwhite;
   padding: 2rem;
-  color: rgba(243, 244, 246, 1);
-  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  color: black;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 
 .title {
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   text-align: center;
   font-size: 1.5rem;
   line-height: 2rem;
@@ -53,24 +53,23 @@ body{
 
 .input-group label {
   display: block;
-  color: rgba(156, 163, 175, 1);
+  color: black;
   margin-bottom: 4px;
 }
 
 .input-group input {
   border-radius: 0.500rem !important;
   width: 100%;
-  border: 1px solid rgba(55, 65, 81, 1);
+  border: 2px solid lightgrey;
   outline: 0;
-  background-color: rgba(17, 24, 39, 1);
+  background-color: aliceblue;
   padding: 0.75rem 1rem;
   color: rgba(243, 244, 246, 1);
 }
 
-.input-group input:focus {
-  border-color: rgba(167, 139, 250);
+input[type = text]{
+  color: black;
 }
-
 .forgot {
   display: flex;
   justify-content: flex-end;
@@ -81,9 +80,14 @@ body{
 }
 
 .forgot a,.signup a {
-  color: rgba(243, 244, 246, 1);
+  color: rgba(17, 24, 39, 1);
   text-decoration: none;
   font-size: 14px;
+  font-weight: 400;
+}
+
+.signup a{
+  margin-left: 2%;
 }
 
 .forgot a:hover, .signup a:hover {
@@ -132,7 +136,7 @@ body{
   padding-right: 0.75rem;
   font-size: 0.875rem;
   line-height: 1.25rem;
-  color: rgba(156, 163, 175, 1);
+  color: black;
 }
 
 .social-icons {
@@ -151,12 +155,22 @@ body{
 .social-icons .icon svg {
   height: 1.25rem;
   width: 1.25rem;
-  fill: #fff;
+  fill: black;
 }
 
 .signup {
   text-align: center;
   font-size: 0.75rem;
   line-height: 1rem;
-  color: rgba(156, 163, 175, 1);
+  color: black;
+}
+
+.sign{
+  margin-top: 5%;
+}
+
+.log-in-error, .sign-up-error{
+  font-size: medium;
+  color: red;
+  margin: 2% 0 2% 1%;
 }
