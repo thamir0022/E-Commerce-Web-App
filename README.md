@@ -58,5 +58,5 @@ Contributions are welcome! If you find any issues or have suggestions for improv
 
 ## Acknowledgements
 
-- Special thanks to the contributors and the open-source community.
+Special thanks to the contributors and the open-source community.
 
