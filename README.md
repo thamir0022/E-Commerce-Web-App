@@ -14,7 +14,7 @@ The project is developed using Node.js, Express.js, MongoDB for data storage, Ha
 1. Clone the repository:
 
     ```bash
-    https://github.com/thamir0022/E-Commerce-Web-App.git
+    git clone https://github.com/thamir0022/E-Commerce-Web-App.git
     ```
 
 2. Navigate to the project directory:
