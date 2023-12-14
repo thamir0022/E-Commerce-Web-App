@@ -1,39 +1,43 @@
 <header class="p-3 mb-3 border-bottom">
-    <div class="container">
-      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-        <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 link-body-emphasis text-decoration-none">
-          <svg class="bi me-2" width="40" height="32" role="img" aria-label="Amazon">
-            <use xlink:href="/"></use>
-          </svg>
+  <div class="container">
+    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+      <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 link-body-emphasis text-decoration-none">
+        <svg class="bi me-2" width="40" height="32" role="img" aria-label="Amazon">
+          <use xlink:href="/"></use>
+        </svg>
+      </a>
+
+      <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+        <li><a href="/" class="nav-link px-2 link-body-emphasis">Home</a></li>
+        <li><a href="/" class="nav-link px-2 link-body-emphasis">Products</a></li>
+        <li><a href="/admin/logout" class="nav-link px-2 link-body-emphasis">Logout</a></li>
+      </ul>
+
+      <div class="dropdown text-end">
+        <a href="" class="d-block link-body-emphasis text-decoration-none dropdown-toggle mx-3"
+          data-bs-toggle="dropdown" aria-expanded="false">
+          <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
         </a>
-
-        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-          <li><a href="/admin/admin-panel" class="nav-link px-2 link-body-emphasis">Admin Panel</a></li>
-          <li><a href="/admin/all-products" class="nav-link px-2 link-body-emphasis">All Products</a></li>
-          <li><a href="/admin/all-orders" class="nav-link px-2 link-body-emphasis">All Orders</a></li>
-          <li><a href="/admin/all-users" class="nav-link px-2 link-body-emphasis">All Users</a></li>
-          <li><a href="/" class="nav-link px-2 link-body-emphasis">Home Page</a></li>
+        <ul class="dropdown-menu text-small" style="">
+          <li><a class="dropdown-item" href="/">Profile</a></li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+          <li><a class="dropdown-item" href="/cart">Cart</a></li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+          <li><a class="dropdown-item" href="/order-details">Orders</a></li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+          <li><a class="dropdown-item" href="/">Settings</a></li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+          <li><a class="dropdown-item" href="/logout">Sign Out</a></li>
         </ul>
-
-        <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
-          <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
-        </form>
-
-        <div class="dropdown text-end">
-          <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown"
-            aria-expanded="false">
-            <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
-          </a>
-          <ul class="dropdown-menu text-small" style="">
-            <li><a class="dropdown-item" href="#">New project...</a></li>
-            <li><a class="dropdown-item" href="#">Settings</a></li>
-            <li><a class="dropdown-item" href="#">Profile</a></li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-            <li><a class="dropdown-item" href="#">Sign out</a></li>
-          </ul>
-        </div>
       </div>
     </div>
-  </header>
+  </div>
+</header>

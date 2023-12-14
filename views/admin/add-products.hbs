@@ -19,30 +19,27 @@
         <input type="text" name="productStarCount" value="0" class="form-control" id="inputPassword4" required>
       </div>
       <div class="col-md-6">
-        <label class="form-label">Keywords</label>
-        <div class="mb-3 col-md-6">
-          <textarea style="max-height: 40px; min-height: 40px; border: 2px solid #ccc; border-radius: 5px;" name="" id="" cols="30" rows="1"></textarea>
-        </div>
-        <label class="form-label">Product Image</label>
-        <div class="mb-3 col-md-6">
-          <img id="NewProductImg" style="margin-left: 25px;" width="80px">
-        </div>
+        <label for="inputGroupSelect01" class="form-label">Keywords</label>
+          <textarea style="max-height: 100px;" maxlength="50" name="keywords" class="form-control border border-black" required></textarea>
       </div>
-      <div class="col-md-6">
-        <label for="formFile" class="form-label">Product Image</label>
-        <input class="form-control" type="file" id="formFile" name="productImage" onchange="viewImg(event)"
-          accept="image/*">
+        <div class="col-md-6">
+        <label for="inputGroupSelect01" class="form-label">Product Image</label>
+        <input class="form-control" type="file" id="formFile" name="productImage" onchange="viewImg(event)" accept="image/*">
       </div>
-      <div class="col-12">
+      <div style="display: none;" class="col-md-3" id="product-image-container">
+        <label for="" class="col-md-12 mb-3">Image Preview</label>
+        <img style="max-width: 100%; max-height: 100%; width: 150px;" class="col-md-12" id="product-image">
+      </div>
+      <div class="col-md-12">
         <div class="form-check">
           <input class="form-check-input" type="checkbox" id="gridCheck" required>
           <label class="form-check-label" for="gridCheck">
             Check me out
           </label>
         </div>
+        <button type="submit" class="btn btn-outline-dark mt-3 float-start">Conform</button>
       </div>
-      <div class="col-6">
-        <button type="submit" class="btn btn-outline-dark mb-3 float-start">Conform</button>
+      </div>
       </div>
     </form>
   </div>
@@ -50,8 +47,8 @@
 
 <script>
   function viewImg(event) {
-    document.getElementById('NewProductImg').setAttribute('src', URL.createObjectURL(event.target.files[0]));
-    const newProductImageContainer = document.getElementById('newProductImageContainer');
+    document.getElementById('product-image').setAttribute('src', URL.createObjectURL(event.target.files[0]));
+    const newProductImageContainer = document.getElementById('product-image-container');
     newProductImageContainer.style.display = 'block';
   }
 </script>

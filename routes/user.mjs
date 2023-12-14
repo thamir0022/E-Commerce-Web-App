@@ -1,12 +1,12 @@
 import express from 'express';
 import { getAllProducts } from '../helpers/product-helpers.mjs';
-import { doSignup, doLogin, addToCart, cartProducts, updateCart, removeProduct, placeOrder, getOrders} from '../helpers/user-helpers.mjs';
-import { cartDetails } from '../config/connection.mjs';
+import { doSignup, doLogin, addToCart, cartProducts, updateCart, removeProduct, placeOrder, getOrders, generateRazorPay, verifyPayment} from '../helpers/user-helpers.mjs';
+import { orderDetails } from '../config/connection.mjs';
 const router = express.Router();
 
 //This function is used to check a user is logged in or not, we can call this function where ever we wanna know if a user is logged in or not.
 const verifyLogin = (req, res, next) => {
-  if(req.session.loggedIn){
+  if(req.session.userLoggedIn){
     next();
   }else{
     res.redirect('/login');
@@ -25,21 +25,22 @@ router.get('/', async(req, res, next) => {
 
 router.get('/login',(req, res, next) => {
   try{
-    res.render('users/login', { auth: true, loginErr: req.session.logInErr});
-    req.session.logInErr = null;
+    res.render('users/login', { auth: true, loginErr: req.session.userLogInErr});
+    req.session.userLogInErr = null;
   }catch(error){
     next(error)
   }
 });
 
 router.get('/signup', (req, res, next) => {
-  res.render('users/signup', { auth: true, signUpErr: req.session.signUpErr })
-  req.session.signUpErr  = null
+  res.render('users/signup', { auth: true, signUpErr: req.session.userSignUpErr })
+  req.session.userSignUpErr  = null
 })
 
 router.get('/logout', (req, res, next) => {
-  req.session.destroy();
-  res.redirect('/');
+  req.session.userLoggedIn = false;
+  req.session.user = null;
+  res.redirect('/')
 });
 
 router.get('/cart',verifyLogin, async(req, res, next) => {
@@ -78,7 +79,7 @@ router.post('/signup',async (req, res, next) => {
     if(userDetails.loginStatus){
       res.redirect('/login');
     }else{
-      req.session.signUpErr = userDetails.signUpErr
+      req.session.userSignUpErr = userDetails.signUpErr
       res.redirect('/signup');
     }
   }catch(error){
@@ -95,11 +96,11 @@ router.post('/login', async (req, res, next) => {
     const userDetails = await doLogin(userData);
 
     if (userDetails.loginStatus) {
-      req.session.loggedIn = true;
+      req.session.userLoggedIn = true;
       req.session.user = userDetails;
       res.redirect('/');
     }else{
-      req.session.logInErr = userDetails.logInErr;
+      req.session.userLogInErr = userDetails.logInErr;
       res.redirect('/login');
     }
   } catch(error){
@@ -174,8 +175,16 @@ router.post('/place-order', verifyLogin, async(req, res, next) => {
     let products = await cartProducts(req.body.userId)
     if(products != null){
       orderDetails.productDetails = products.map(p => ({ productId: p._id, quantity: p.quantity }));
-      await placeOrder(orderDetails)
-      res.redirect('/order-details');
+      const orderInfo = await placeOrder(orderDetails)
+      if(req.body.paymentMethod == 'cod'){
+        res.json({codSuccess: true})
+      }else if (req.body.paymentMethod == 'onlinePay'){
+        const orderId = orderInfo._id
+        const amount = 100 * orderInfo.totalAmount;
+        await generateRazorPay(orderId, amount).then((response) => {
+          res.json(response)
+        })
+      }
     }else{
       res.redirect('/cart');
     }
@@ -190,9 +199,6 @@ router.get('/order-details', verifyLogin, async (req, res, next) => {
     const userId = req.session.user?.user?._id;
     const userDetails = req.session.user;
     const orderDetails = await getOrders(userId);
-
-    console.log('Order Details:', orderDetails);
-    console.log('Products 1 : ',orderDetails.orders[0].products);
     res.render('users/order-details', {
       isuser: true,
       myOrders: true,
@@ -204,5 +210,33 @@ router.get('/order-details', verifyLogin, async (req, res, next) => {
   }
 });
 
+router.post('/verify-payment', verifyLogin, (req, res, next) => {
+  try{
+    const payment = req.body.payment
+    const order = req.body.order
+    const userId = req.session.user?.user?._id;
+    const verify = verifyPayment(payment, order, userId)
+    if(verify){
+      res.redirect('/order-details')
+    }
+  }catch(error){
+    next(error)
+  }
+})
+
+router.post('/cancel-order', verifyLogin, async (req, res, next) => {
+  try{
+    let orderId = req.body.orderId;
+    const userId = req.session.user?.user?._id;
+    let allOrders = await orderDetails.findOne({userId: userId})
+    let orderIndex = allOrders.orders.findIndex(o => o._id.equals(orderId))
+    if(orderIndex != -1){
+      allOrders.orders[orderIndex]
+    }
+    res.redirect('/order-details')
+  }catch(error){
+    next(error)
+  }
+})
 
 export default router;

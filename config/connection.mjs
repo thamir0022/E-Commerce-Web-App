@@ -54,13 +54,19 @@ const orderDetailsSchema = new mongoose.Schema({
   }],
   totalAmount: Number,
   totalProducts: Number,
-  status: String
+  paymentStatus: String
   }]
+})
+
+const adminDetailsSchema = new mongoose.Schema({
+  userId: String,
+  password: String
 })
 
 const ProductDetails = mongoose.model('ProductDetails', productDetailsSchema);
 const userDetails = mongoose.model('userDetails', userDetailsSchema);
 const cartDetails = mongoose.model('cartDetails', cartDetailsSchema);
 const orderDetails = mongoose.model('orderDetails', orderDetailsSchema);
+const admindetails = mongoose.model('admindetails', adminDetailsSchema);
 
-export { db, ProductDetails, userDetails, cartDetails, orderDetails};
+export { db, ProductDetails, userDetails, cartDetails, orderDetails, admindetails};

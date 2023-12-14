@@ -1,6 +1,6 @@
 <section>
   {{#if userDetails}}
-  <h3 style="margin-left: 7%;" class="">Welcome back {{userDetails.user.name}} 👋🏻</h3>
+  <h3 style="margin-left: 7%;" class="greeting">Hello {{userDetails.user.name}} <img src="https://cdn0.iconfinder.com/data/icons/remoji-soft-1/512/emoji-wink-hello-smile-happy.png" alt="" width="40px"></h3>
   {{/if}}
   <div class="album py-5 bg-body-emphasis">
     <div class="container">
@@ -9,7 +9,7 @@
         <div class="product-grid">
           <div class="product-container">
             <div class="product-image-container">
-              <img class="product-image" src="{{this.image}}">
+              <img class="product-image" src="{{this.image}}" alt="{{this.name}}" title="{{this.name}}">
             </div>
 
             <div class="product-name limit-text-to-2-lines">
@@ -17,17 +17,17 @@
             </div>
 
             <div class="product-rating-container">
-              <img class="product-rating-stars" src="">
+              <img class="product-rating-stars" src="images/products/ratings/rating-{{this.rating.stars}}.png" alt="{{this.rating.stars}}">
               <div class="product-rating-count link-primary">
                 {{this.rating.count}}
               </div>
             </div>
 
             <div class="product-price">
-              {{this.priceCents}}
+              ₹ {{this.priceCents}}
             </div>
 
-            <div class="product-quantity-container">
+            {{!-- <div class="product-quantity-container">
               <select>
                 <option selected="1">1</option>
                 <option value="2">2</option>
@@ -40,14 +40,10 @@
                 <option value="9">9</option>
                 <option value="10">10</option>
               </select>
-            </div>
+            </div> --}}
 
             <div class="product-spacer"></div>
 
-            <div class="added-to-cart">
-              <img src="images/icons/checkmark.png">
-              Added
-            </div>
 
             <a style="text-decoration: none; color: black; font-weight: 500;" href="/add-to-cart/{{this._id}}/"><button
                 class="add-to-cart-button button-primary js-add-to-cart " data-product-id="${product.id}"

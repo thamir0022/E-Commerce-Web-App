@@ -114,3 +114,14 @@
   transition: 500ms;
   background-color: #f90;
 }
+
+.order-empty{
+  margin: auto;
+  padding: 10%;
+  width: fit-content;
+  text-align: center;
+}
+
+.greeting{
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}

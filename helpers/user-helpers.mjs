@@ -1,27 +1,35 @@
 import { userDetails, cartDetails, orderDetails } from '../config/connection.mjs';
 import { findProduct } from './product-helpers.mjs';
 import bcrypt from 'bcrypt';
+import Razorpay from 'razorpay';
+import crypto from 'crypto'
+//Rayzor Pay
+var instance = new Razorpay({
+  key_id: 'rzp_test_qpEJcH7ArXIBno',
+  key_secret: 'ntS2Sq0GKp0ETOslf2u1nEL9',
+});
+
 
 let doSignup = async (userData) => {
-  let response = { user: null, loginStatus: false, signUpErr: null};
-  try{
-    let userExist = await userDetails.findOne({userName: userData.userName})
-    if(!userExist){
+  let response = { user: null, loginStatus: false, signUpErr: null };
+  try {
+    let userExist = await userDetails.findOne({ userName: userData.userName })
+    if (!userExist) {
       userData.password = await bcrypt.hash(userData.password, 10)
       await userDetails.create(userData);
       response.user = userData
       response.loginStatus = true
-    }else{
+    } else {
       response.signUpErr = 'User already exist!'
     }
-  }catch(error){
-    throw(error)
+  } catch (error) {
+    throw (error)
   }
   return response;
 }
 
 const doLogin = async (userData) => {
-  let response = { user: null, loginStatus: false, logInErr: null};
+  let response = { user: null, loginStatus: false, logInErr: null };
   try {
     const user = await userDetails.findOne({ userName: userData.userName });
     if (user) {
@@ -35,8 +43,8 @@ const doLogin = async (userData) => {
     } else {
       response.logInErr = "User doesn't exist"
     }
-  } catch(error){
-    throw(error)
+  } catch (error) {
+    throw (error)
   }
   return response;
 };
@@ -98,12 +106,9 @@ const updateCart = async (userId, productId, change) => {
         }
 
         await cart.save();
-        console.log('Cart updated successfully');
       } else {
-        console.log('Product not found in the cart');
       }
     } else {
-      console.log('Cart not found');
     }
   } catch (error) {
     console.error('Error while updating cart:', error);
@@ -144,12 +149,12 @@ const cartProducts = async (userId) => {
 
     const productIds = cartData.products.map(p => p.productId)
     const productQuantity = cartData.products.map(p => p.quantity)
-    
+
     const productDetailsPromises = productIds.map(async productId => await findProduct(productId));
 
     try {
       const productDetails = await Promise.all(productDetailsPromises);
-      const productsWithQuantity = productDetails.map((product, index) => ({...product,  quantity: productQuantity[index]}));
+      const productsWithQuantity = productDetails.map((product, index) => ({ ...product, quantity: productQuantity[index] }));
 
       return productsWithQuantity;
     } catch (error) {
@@ -180,26 +185,34 @@ const placeOrder = async (order) => {
       productDetails,
       totalAmount: amount,
       totalProducts: products.length,
-      status: paymentMethod === 'cod' ? 'placed' : 'pending',
+      paymentStatus: paymentMethod === 'cod' ? 'placed' : 'pending',
     };
 
     // Find user orders
     const existingOrders = await orderDetails.findOne({ userId });
-
+    let orderId;
+    let totalAmount;
     if (existingOrders) {
       // Update existing userOrders document
       existingOrders.orders.unshift(newOrder);
       await existingOrders.save();
+      orderId = existingOrders.orders[0]._id;
+      totalAmount = existingOrders.orders[0].totalAmount;
     } else {
       // Create new orderDetails document
       const newOrderDetails = await orderDetails.create({
         userId,
         orders: [newOrder],
       });
+      console.log('New Order Details : ', newOrderDetails);
+      orderId = newOrderDetails.orders[0]._id;
+      totalAmount = existingOrders.orders[0].totalAmount;
     }
 
     // Delete cartDetails for the user
     await cartDetails.findOneAndDelete({ userId });
+    //Return Order Id
+    return { _id: orderId._id.toString(), totalAmount };
   } catch (error) {
     console.error("Error placing order:", error.message);
     throw error;
@@ -243,6 +256,74 @@ const getOrders = async (userId) => {
   }
 };
 
+const generateRazorPay = async (orderId, amount) => {
+  return new Promise((resolve, reject) => {
+    const options = {
+      amount: amount, // amount in the smallest currency unit
+      currency: 'INR',
+      receipt: orderId,
+    };
+    instance.orders.create(options, (err, order) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log('New Order : ', order);
+        resolve(order)
+      }
+    })
+  })
+}
+
+const verifyPayment = (payment, order, userId) => {
+  console.log('Payment : ', payment);
+  console.log('Order : ', order);
+  try {
+    const hmac = crypto.createHmac('sha256', 'ntS2Sq0GKp0ETOslf2u1nEL9'); 
+    const data = `${order.id}|${payment.razorpay_payment_id}`;
+    const generated_signature = hmac.update(data).digest('hex');
+    if (generated_signature === payment.razorpay_signature) {
+      console.log("Payment Successful");
+      let orderId = order.receipt;
+      changePaymentStatus(orderId, userId);
+      return true;
+    } else {
+      console.log('Payment verification failed: Invalid signature');
+      return false;
+    }
+  } catch (error) {
+    console.error('Error while verifying payment! ', error);
+    return false; // You might want to handle the error more gracefully or log it appropriately
+  }
+};
 
 
-export { doSignup, doLogin, addToCart, cartProducts, updateCart, removeProduct, placeOrder, getOrders}
+const changePaymentStatus = async (orderId, userId) => {
+  try {
+    let allOrders = await orderDetails.findOne({ userId: userId });
+
+    if (allOrders) {
+      let orderIndex = allOrders.orders.findIndex(o => o._id.equals(orderId));
+
+      if (orderIndex !== -1) {
+        allOrders.orders[orderIndex].paymentStatus = 'paid';
+
+        // Update the document in the collection
+        await orderDetails.findOneAndUpdate(
+          { userId: userId },
+          { $set: { orders: allOrders.orders } }
+        );
+
+        console.log('Payment status changed successfully.');
+      } else {
+        console.error('Order not found.');
+      }
+    } else {
+      console.error('User not found.');
+    }
+  } catch (error) {
+    console.error('Error changing payment status: ', error);
+  }
+};
+
+
+export { doSignup, doLogin, addToCart, cartProducts, updateCart, removeProduct, placeOrder, getOrders, generateRazorPay, verifyPayment }

@@ -1,0 +1,114 @@
+<div class="signup">
+	<div class="form-container">
+		<p class="title">Admin Login</p>
+		<form class="form" action="/admin/login" method="post">
+
+			<div class="relative mb-3">
+				<input type="text" id="userName" name="userId" required
+					class="input-block block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+					placeholder=" " />
+				<label style="background-color: transparent !important; font-size: medium;" for="userId"
+					class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-3 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-black-600 peer-focus:dark:text-black-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-0.5 peer-focus:scale-75 peer-focus:-translate-y-5 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">
+					User ID</label>
+			</div>
+
+			<div class="relative mb-3">
+				<input type="text" id="password" name="password" required
+					class="input-block block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+					placeholder=" " />
+				<label style="background-color: transparent !important; font-size: medium;" for="password"
+					class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-3 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-black-600 peer-focus:dark:text-black-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-0.5 peer-focus:scale-75 peer-focus:-translate-y-5 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">
+					Password</label>
+			</div>
+			{{#if loginErr}}
+			<p class="d-flex justify-content-left log-in-error">{{loginErr}}</p>
+			{{/if}}
+			<button class="btn btn-outline-light w-100 fw-bold my-2 h-10" type="submit">Log In</button>
+		</form>
+	</div>
+</div>
+
+<style>
+	body {
+		background: #000000;
+		/* fallback for old browsers */
+		background: -webkit-linear-gradient(to right, #434343, #000000);
+		/* Chrome 10-25, Safari 5.1-6 */
+		background: linear-gradient(to right, #434343, #000000);
+		/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+	}
+
+	.signup {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		margin-top: 7%;
+	}
+
+	.invalid-user {
+		color: red;
+		text-decoration: none;
+		margin-bottom: 5px;
+		font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	}
+
+
+	.form-container {
+		/* margin: 15vh auto; */
+		width: 300px;
+		height: 50vh;
+		border-radius: 0.75rem;
+		background-color: transparent;
+		padding: 2rem;
+		color: black;
+		box-shadow: #ffffff85 0px 7px 29px 0px;
+	}
+
+	.title {
+		font-family: 'Courier New', Courier, monospace;
+		text-align: center;
+		font-size: 1.7rem;
+		line-height: 2rem;
+		font-weight: 700;
+		color: white;
+	}
+
+	.form {
+		margin-top: 1.5rem;
+	}
+
+	.input-group {
+		margin-top: 0.25rem;
+		font-size: 0.875rem;
+		line-height: 1.25rem;
+	}
+
+	.input-group label {
+		display: block;
+		color: black;
+		margin-bottom: 4px;
+	}
+
+	.input-group input {
+		border-radius: 0.500rem !important;
+		width: 100%;
+		border: 2px solid white;
+		outline: 0;
+		padding: 0.75rem 1rem;
+	}
+
+	input[type=text] {
+		color: white;
+		border: 2px solid black;
+	}
+
+	input[type=text]:focus {
+		border: 2px solid white;
+	}
+
+	.log-in-error {
+		font-size: medium;
+		color: red;
+		margin: 2% 0 2% 1%;
+	}
+</style>

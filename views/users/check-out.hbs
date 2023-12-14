@@ -34,45 +34,46 @@
 
         <div class="col-md-7 col-lg-7">
           <h4 class="mb-3">Shipping address</h4>
-          <form class="form" id="check-out-form" action="/place-order" method="post">
+          <form class="form" id="check-out-form">
             <div class="row g-3">
               <div class="col-sm-6">
                 <input hidden type="text" name="userId" value="{{userId}}" id="">
                 <label for="firstName" class="form-label">First name</label>
-                <input type="text" name="firstName" class="form-control" id="firstName" placeholder="" value="Thamir"
+                <input type="text" name="firstName" class="form-control" id="firstName" placeholder="" value=""
                   required fdprocessedid="uiy03">
               </div>
 
               <div class="col-sm-6">
                 <label for="lastName" class="form-label">Last name</label>
-                <input type="text" name="lastName" class="form-control" id="lastName" placeholder="" value="Siddik"
+                <input type="text" name="lastName" class="form-control" id="lastName" placeholder="" value=""
                   required fdprocessedid="ox0ge">
               </div>
 
               <div class="col-12">
                 <label for="address" class="form-label">Address</label>
                 <input type="text" name="address" class="form-control" id="address" placeholder="1234 Main St"
-                  value="Palakkad" required fdprocessedid="9qbaq">
+                  value="" required fdprocessedid="9qbaq">
               </div>
 
               <div class="col-md-4">
                 <label for="state" class="form-label">State</label>
                 <select class="form-select" name="state" id="state" required fdprocessedid="15u6rl">
-                  <option value="" selected="Kerela">Choose...</option>
-                  <option>Kerela</option>
+                  <option value="kerela">Kerela</option>
+                  <option value="">Tamil Nadu</option>
+                  <option value="">Karnataka</option>
                 </select>
               </div>
 
               <div class="col-md-4">
                 <label for="zip" class="form-label">Zip</label>
-                <input type="text" name="zipCode" class="form-control" id="zip" placeholder="" value="678002" required
+                <input type="text" name="zipCode" class="form-control" id="zip" placeholder="" value="" required
                   fdprocessedid="6ue81m">
               </div>
 
               <div class="col-md-4">
                 <label for="zip" class="form-label">Phone Number</label>
                 <input type="text" name="phoneNumber" class="form-control" id="phoneNumber" placeholder=""
-                  value="1234567890" required fdprocessedid="6ue81m">
+                  value="" required fdprocessedid="6ue81m">
               </div>
             </div>
 
@@ -87,22 +88,18 @@
 
             <h4 class="mb-3">Payment</h4>
 
-            <div class="my-3">
+            <div class="my-3" role="checkbox">
               <div class="form-check">
-                <input id="credit" name="paymentMethod" type="radio" value="cod" class="form-check-input" checked=""
-                  required="">
-                <label class="form-check-label" for="credit">Cash On Delivery</label>
+                <input id="validationFormCheck1" name="paymentMethod" type="radio" value="cod" class="form-check-input">
+                <label class="form-check-label" for="validationFormCheck1">Cash On Delivery</label>
               </div>
               <div class="form-check">
-                <input id="debit" name="paymentMethod" type="radio" value="debit-card" class="form-check-input"
-                  required="">
-                <label class="form-check-label" for="debit">Debit card</label>
+                <input id="validationFormCheck2" name="paymentMethod" type="radio" value="onlinePay" class="form-check-input" checked>
+                <label class="form-check-label" for="validationFormCheck2">Online Payment</label>
               </div>
-              <div class="form-check">
-                <input id="paypal" name="paymentMethod" type="radio" value="paypal" class="form-check-input"
-                  required="">
-                <label class="form-check-label" for="paypal">PayPal</label>
-              </div>
+            </div>
+            <div class="col-md-6">
+              <img src="/images/products/razor-pay.png" alt="" width="100%">
             </div>
 
             <hr class="my-4">
@@ -122,20 +119,28 @@
     </footer>
   </div>
 </section>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
-{{!-- <script>
+<script>
 
-  $("#check-out-form").submit(() => {
+  $("#check-out-form").submit((event) => {
+    event.preventDefault();  // Prevent the default form submission
+
     const formData = $('#check-out-form').serialize();
     console.log('Data : ', formData);
 
     $.ajax({
       url: '/place-order',
-      method: 'post',
+      method: 'POST',  // Use POST method
       data: formData,
       success: (response) => {
-        // Redirect to /order-details upon successful order placement
-        window.location.href = '/order-details';
+        console.log(response)
+        if (response.codSuccess) {
+          // Redirect to /order-details upon successful order placement
+          window.location.href = '/order-details';
+        } else {
+          razorpayPayment(response)
+        }
       },
       error: (error) => {
         // Handle error response if needed
@@ -144,4 +149,53 @@
     });
   });
 
-</script> --}}
+
+  function razorpayPayment(order) {
+    console.log('Order : ',order)
+    var options = {
+      "key": "rzp_test_qpEJcH7ArXIBno", // Enter the Key ID generated from the Dashboard
+      "amount": order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+      "currency": "INR",
+      "name": "Thamir Siddik",
+      "description": "Test Transaction",
+      "image": "https://i.pinimg.com/originals/f1/49/bb/f149bb1e128aa7a706374a578f5b04ac.jpg",
+      "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+      "handler": function (response) {
+        verifyPayment(response, order)
+      },
+      "prefill": {
+        "name": "Gaurav Kumar",
+        "email": "gaurav.kumar@example.com",
+        "contact": "9000090000"
+      },
+      "notes": {
+        "address": "Razorpay Corporate Office"
+      },
+      "theme": {
+        "color": "#3399cc"
+      }
+    };
+
+    var rzp1 = new Razorpay(options);
+    rzp1.open();
+
+    rzp1.on('payment.failed', function (response) {
+      console.log(response.error);
+    });
+
+  }
+
+  async function verifyPayment(payment, order) {
+    try {
+      await $.ajax({
+        url: '/verify-payment',
+        data: JSON.stringify({ payment, order }),
+        contentType: 'application/json',
+        method: 'post'
+      });
+    } catch (error) {
+      console.error('Error verifying payment:', error);
+    }
+  }
+
+</script>
