@@ -1,6 +1,6 @@
 # Ecommerce Web App
 
-Ecommerce Express is a dynamic and user-friendly web application designed for seamless online shopping experiences. 
+This Ecommerce web app is a dynamic and user-friendly web application designed for seamless online shopping experiences. 
 The project is developed using Node.js, Express.js, MongoDB for data storage, Handlebars (hbs) templating engine for the frontend, and React for an enhanced user interface (Under development).
 
 ## Features
